@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  etl:
+    build: .
+    environment:
+      # Use value from host environment
+      DATA_SOURCE_URL:
+      DATABASE_URL: postgres+pg8000://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+    links:
+      - "postgres"
+    depends_on:
+      - "postgres"
+  postgres:
+    image: postgres:alpine
+    environment:
+      # Use value from host environment
+      POSTGRES_PASSWORD:
+      POSTGRES_USER:
+      POSTGRES_DB:
